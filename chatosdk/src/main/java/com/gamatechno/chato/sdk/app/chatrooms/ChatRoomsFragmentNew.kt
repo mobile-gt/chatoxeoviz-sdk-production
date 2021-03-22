@@ -252,13 +252,17 @@ open class ChatRoomsFragmentNew : FragmentPermission(), ChatRoomsView.View {
     }
 
     override fun onHideLoading() {
-        helper_loading_top.hide()
-        if (roomAdapter!!.data.size == 0 || needShowLoadingView) {
-            needShowLoadingView = false
-            roomAdapter!!.initLoading(false)
-            if (swipe.isRefreshing) swipe.isRefreshing = false
-        } else {
-            if (swipe.isRefreshing) swipe.isRefreshing = false
+        try {
+            helper_loading_top.hide()
+            if (roomAdapter!!.data.size == 0 || needShowLoadingView) {
+                needShowLoadingView = false
+                roomAdapter!!.initLoading(false)
+                if (swipe.isRefreshing) swipe.isRefreshing = false
+            } else {
+                if (swipe.isRefreshing) swipe.isRefreshing = false
+            }
+        } catch (e : Exception){
+
         }
     }
 
@@ -281,10 +285,15 @@ open class ChatRoomsFragmentNew : FragmentPermission(), ChatRoomsView.View {
 
 
     override fun onRequestObrolan(list: List<ChatRoomsUiModel?>?, isRefresh: Boolean) {
-        isLoadMore = true
-        helper_noconversation.visibility = View.GONE
-        roomAdapter!!.addData(isRefresh, list)
-        if (roomAdapter!!.data.size == 0) helper_noconversation.visibility = View.VISIBLE else helper_noconversation.visibility = View.GONE
+        try {
+            isLoadMore = true
+            helper_noconversation.visibility = View.GONE
+            roomAdapter!!.addData(isRefresh, list)
+            if (roomAdapter!!.data.size == 0) helper_noconversation.visibility = View.VISIBLE else helper_noconversation.visibility = View.GONE
+        } catch (e : Exception){
+
+        }
+
     }
 
     override fun successPinnedChatRoom(message: String?) {
@@ -300,9 +309,13 @@ open class ChatRoomsFragmentNew : FragmentPermission(), ChatRoomsView.View {
     }
 
     override fun onFailedRequestObrolan() {
-        if (roomAdapter!!.data.size == 0 || needShowLoadingView) {
-            helper_noconversation.visibility = View.VISIBLE
-            needShowLoadingView = false
+        try {
+            if (roomAdapter!!.data.size == 0 || needShowLoadingView) {
+                helper_noconversation.visibility = View.VISIBLE
+                needShowLoadingView = false
+            }
+        } catch (e : Exception){
+
         }
     }
 

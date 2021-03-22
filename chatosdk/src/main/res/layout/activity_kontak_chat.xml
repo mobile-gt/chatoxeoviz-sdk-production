@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/grey_100"
     android:paddingBottom="@dimen/dimen_24dp"
     tools:context=".app.kontakchat.KontakChatDialog">
     <androidx.cardview.widget.CardView
@@ -50,7 +51,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_margin="@dimen/dimen_16dp"
                         android:src="@drawable/ic_chato_search"
-                        android:tint="@color/black"
+                        app:tint="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
@@ -67,7 +68,6 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
     <RelativeLayout
-        android:background="@color/grey_100"
         android:layout_below="@+id/cardview_search"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
