@@ -50,6 +50,39 @@ open class ChatoBaseApplication : Application() {
         GGFWUtil.setStringToSP(this, Preferences.USER_LOGIN, "")
     }
 
+    fun setChatoFirebaseToken(token : String){
+        LoginPresenter(this, object : LoginView.View{
+            override fun onErrorConnection(message: String?) {
+
+            }
+
+            override fun onAuthFailed(error: String?) {
+
+            }
+
+            override fun onFailedUpdateTokenFirebase() {
+
+            }
+
+            override fun onHideLoading() {
+
+            }
+
+            override fun onLoading() {
+
+            }
+
+            override fun onSucces() {
+
+            }
+
+            override fun onSuccessUpdateTokenFirebase() {
+
+            }
+
+        }).updateTokenFirebase(token)
+    }
+
     fun setChatoToken(token : String, authInteractor: AuthInteractor){
         ChatoSDKMapper.setCustomer(this, "chato-46A423073543CDA4AF73091DD37F8B1D", "AIZ-FEEEA8A22C8BFB300AD10BD810164E22")
         LoginPresenter(this, object : LoginView.View{
