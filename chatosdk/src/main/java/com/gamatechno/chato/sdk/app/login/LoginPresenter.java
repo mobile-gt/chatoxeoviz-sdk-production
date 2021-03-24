@@ -96,12 +96,54 @@ public class LoginPresenter extends BasePresenter implements LoginView.Presenter
 
             @Override
             public void onSuccess(JSONObject response) {
-
                 try {
                     if(response.getBoolean("success")){
                         JSONObject obj = response.getJSONObject("result");
                         ChatoUtils.setUserLogin(getContext(), gson.fromJson(obj.toString(), UserModel.class));
-                        clientView.onAuthResult(true, "Sukses autentikasi Chato");
+
+                        GGFWRest.POST(Api.update_device_token(), new RequestInterface.OnPostRequest() {
+                            @Override
+                            public void onPreExecuted() {
+
+                            }
+
+                            @Override
+                            public void onSuccess(JSONObject response) {
+                                view.onHideLoading();
+                                try {
+                                    if(response.getBoolean("success")){
+                                        clientView.onAuthResult(true, "Sukses autentikasi Chato");
+                                    } else {
+                                        clientView.onAuthResult(false, "Gagal autentikasi Chato");
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(String error) {
+                                clientView.onAuthResult(false, "Gagal autentikasi Chato");
+                            }
+
+                            @Override
+                            public Map<String, String> requestParam() {
+                                Map<String, String> params = new HashMap<>();
+                                params.put("device_token", gson.fromJson(obj.toString(), UserModel.class).getAccess_token());
+                                return params;
+                            }
+
+                            @Override
+                            public Map<String, String> requestHeaders() {
+                                Map<String, String> headers = new HashMap<>();
+                                headers.put("Authorization", "Bearer " + ChatoUtils.getUserLogin(getContext()).getAccess_token());
+                                if(customer!=null){
+                                    headers.put("customer_app_id", ""+customer.getCustomer_app_id());
+                                    headers.put("customer_secret", ""+customer.getCustomer_secret());
+                                }
+                                return headers;
+                            }
+                        });
                     } else {
                         clientView.onAuthResult(false, response.getString("message"));
                     }
