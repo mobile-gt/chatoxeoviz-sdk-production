@@ -1549,8 +1549,15 @@ public class ChatRoomActivity extends BaseChatRoomActivity implements ChatRoomVi
             setStatusBarRoom("Official Group");
             lay_no_action_chat.setVisibility(View.VISIBLE);
             lay_action_chat.setVisibility(View.GONE);
-            tv_no_action_chat.setText("Hanya admin yang dapat mengirimkan pesan");
-        } else {
+//            tv_no_action_chat.setText("Hanya admin yang dapat mengirimkan pesan");
+            if (group.getIs_admin() == 0) {
+                lay_no_action_chat.setVisibility(View.VISIBLE);
+                lay_action_chat.setVisibility(View.GONE);
+                tv_no_action_chat.setText("Hanya admin yang dapat mengirimkan pesan");
+            } else {
+                lay_action_chat.setVisibility(View.VISIBLE);
+            }
+        }  else {
             if (group.getIs_exit() == 1) {
                 lay_no_action_chat.setVisibility(View.VISIBLE);
                 lay_action_chat.setVisibility(View.GONE);
